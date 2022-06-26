@@ -22,7 +22,12 @@ refs.loadMoreBtn.classList.add('is-hidden');
 
 function onSearch(event) {
     event.preventDefault();
-    picturesApiService.query = event.currentTarget.elements.searchQuery.value;
+    let search = event.currentTarget.elements.searchQuery.value.trim();
+    if (search.length === 0) {
+        Notify.info(`Please enter a request`);
+        return
+    }
+    picturesApiService.query = search;
     picturesApiService.resetPage();
     refs.picturesContainer.innerHTML ="";
     picturesApiService.getPictures().then(response => {
